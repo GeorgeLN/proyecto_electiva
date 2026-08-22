@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "325629394753",
+    "project_id": "proyecto-electiva-d58bf",
+    "storage_bucket": "proyecto-electiva-d58bf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325629394753:android:18fb31dad4e51bd9eb6bc0",
+        "android_client_info": {
+          "package_name": "com.george.proyecto_electiva"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKww5Yf0ReWp4GWxA3RD1Ulm06iIGomO0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
