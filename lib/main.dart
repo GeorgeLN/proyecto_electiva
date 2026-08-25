@@ -1,31 +1,45 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:proyecto_electiva/firebase_options.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
+import 'core/router/app_router.dart';
+import 'core/theme/app_theme.dart';
+import 'core/widgets/plant_health_animation.dart';
+import 'features/auth/application/auth_providers.dart';
+import 'firebase_options.dart';
+
 void main() async {
-  await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-  );
-  
-  runApp(
-    const MyApp()
-  );
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await initializeDateFormatting('es');
+
+  runApp(const ProviderScope(child: ProyectoElectivaApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ProyectoElectivaApp extends ConsumerWidget {
+  const ProyectoElectivaApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authStateChangesProvider);
+
+    if (authState.isLoading) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.light,
+        home: const Scaffold(
+          body: Center(child: PlantHealthAnimation(size: 120)),
         ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
-      ),
+      );
+    }
+
+    final router = ref.watch(goRouterProvider);
+    return MaterialApp.router(
+      title: 'Riego Automático',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
+      routerConfig: router,
     );
   }
 }
